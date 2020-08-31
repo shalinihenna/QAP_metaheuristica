@@ -1,4 +1,5 @@
 import random
+from random import randint
 
 #VARIABLES GLOBALES
 population = [] #Arreglo de arreglos
@@ -22,6 +23,21 @@ def readFile(name):
     file.close()
     return matrix
 
+#Swap entre dos valores de una solución
+def swap(p0,p1,solution):
+    temp = solution[p0]
+    solution[p0] = solution[p1]
+    solution[p1] = temp
+    return solution
+
+#Función swap para generar vecino:1
+def neighborhood(solution):
+    p0= randint(0,len(solution)-1)
+    p1= randint(0,len(solution)-1)
+    print("swap entre posicion: ",p0,"y ",p1)
+    neighbour= swap(p0,p1,solution)
+    return neighbour
+    
 #Falta revisar repetidos
 #Generar la población inicial
 def initialPopulation(maxIndividuals, positions):
@@ -145,6 +161,22 @@ def crossover(parents):
                 offsprings.append(offspring)
     return offsprings
 
+#Mutación aplicada a una probabilidad a cada hijo
+def mutation(offsprings,mutationProbability):
+    print()
+    print("OFFSPRINGS: ",offsprings)
+    for os in offsprings:
+        indice = offsprings.index(os)
+        probability = random.random()
+        print("probabilidad: ",probability)
+        if probability < mutationProbability:
+            print("hijo anterior: ",os)
+            os = neighborhood(os)
+            print("hijo mutado: ",os)
+            offsprings[indice] = os
+            #GUardar en la misma posición de la lista
+    print ("OFFSPRINGS mutated:",offsprings)
+    return offsprings
 #--------------MAIN------------
 #Copiar y pegar en una función AG()
 def AG():
@@ -168,7 +200,7 @@ def AG():
         offsprings = crossover(parents)
 #--------------------------------------
         #    - Mutacion
-
+        offsprings_mutated = mutation(offsprings)
 #--------------------------------------
         #d. Reemplazo
 
@@ -189,6 +221,7 @@ initialPopulation(maxIndividuals, len(distance[0]))
 '''
 parents=[[1,2,3,4,5,6,7,8,9],[9,3,7,8,2,6,5,1,4]]
 print("\nparents2: ",parents)
-crossover(parents)
+#crossover(parents)
+hola = mutation(parents,0.2)
 
 #AG()
