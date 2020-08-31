@@ -3,14 +3,19 @@ import matplotlib.pyplot as plt
 import random
 import math
 from random import randint
+import time
 
 distance = []
 flow = []
 bestObjective= []
 temperature= []
+instances_best_objetive= []
+instances_best_objetive_current= []
+time_instances= []
+p= []
+o= []
 alpha= 0
 beta= 0
-
 
 # readFile: función que lee el archivo con los datos
 # entrada: nombre del archivo
@@ -49,11 +54,6 @@ def neighborhood(solution):
     neighbour= swap(p0,p1,solution)
     return neighbour
 
-def generaVecino(vecino):
-    i = random.randint(2, len(vecino) - 1)
-    j = random.randint(0, len(vecino) - i)
-    vecino[j: (j + i)] = reversed(vecino[j: (j + i)])
-    return(vecino)
 # Función Objetivo
 def objectiveFunction(solution):
     sum = 0
@@ -64,25 +64,25 @@ def objectiveFunction(solution):
             sum += aux
     return sum
 
-# SA: Tmax, Tmin, iteration, funtionT
+# SA:
+# entrada:
+#           Tmax = temperatura maxima,
+#           Tmin = temperatura minima,
+#           iteration = máximo de iteraciones internas
+#           funtionT = función de enfriamiento
+# salida: matriz con los datos
 def SA(Tmax, Tmin, iteration, funtionT):
-    s0= initialSolution(len(distance))  #solución inicial
-    sCurrent= s0.copy()
-    t=Tmax
+    s0= initialSolution(len(distance))  #Solución inicial
+    sCurrent= s0.copy()                 #Solución actual
+    t=Tmax                              #Temperatura Máxima
     mejorObjetivo = objectiveFunction(sCurrent)
     mejorSolucion = sCurrent.copy()
-    p= []
-    o= [mejorObjetivo]
+    o.append(mejorObjetivo)
     ofActual=objectiveFunction(sCurrent)
-
     while t > Tmin:
         it=0
-        #print("-----")
-        #print(sCurrent)
-        #print("-----")
         while it < iteration:
-            #sNew= neighborhood(sCurrent)
-            sNew=generaVecino(sCurrent)
+            sNew=neighborhood(sCurrent)
             ofNuevo=objectiveFunction(sNew)
             delta= ofNuevo - ofActual
             if delta < 0:
@@ -105,41 +105,85 @@ def SA(Tmax, Tmin, iteration, funtionT):
             t = t - beta
         else:
             t = t * alpha
-    print(min(bestObjective))
-    print(mejorObjetivo)
-    graficar(bestObjective,p)
-    graficar(p,p)
-    graficar(o,p)
-    return s0
+    #graficar(bestObjective, p, o, mejorObjetivo, temperature)
+    instances_best_objetive_current.append(o)
+    return mejorObjetivo
+
 #graficar
-def graficar(bestObjective,temperature):
-    plt.figure(1)
+def graficar(bestObjective, p, o, mejorObjetivo, temperature):
     graficoMejores = plt.plot(bestObjective)
     plt.setp(graficoMejores,"linestyle","none","marker","s","color","b","markersize","1")
     plt.title(u"Simulated annealing QAP")
-    plt.ylabel(u"valor objetivo")
-    plt.xlabel(u"iteraciones")
+    plt.ylabel(u"Valor objetivo")
+    plt.xlabel(u"Valor Óptimo : " + str(mejorObjetivo))
+    plt.show()
+
+    grafico = plt.plot(o)
+    plt.setp(grafico,"linestyle","none","marker","s","color","r","markersize","1")
+    plt.ylabel(u"Valor actual")
+    plt.xlabel(u"Valor Óptimo : " + str(mejorObjetivo))
+    plt.show()
+
+    grafico = plt.plot(p)
+    plt.setp(grafico,"linestyle","none","marker","s","color","g","markersize","1")
+    plt.ylabel(u"Probabilidad")
+    plt.xlabel(u"Valor Óptimo : " + str(mejorObjetivo))
+    plt.show()
+
+    grafico = plt.plot(temperature)
+    plt.setp(grafico,"linestyle","none","marker","s","color","g","markersize","1")
+    plt.ylabel(u"Temperatura")
+    plt.xlabel(u"Valor Óptimo : " + str(mejorObjetivo))
+    plt.show()
+
+#-------------
+def graficar_inst_20(instancesO,instancesC):
+    #x=range(20)
+    graficoMejores = plt.plot(instancesO)
+    plt.setp(graficoMejores,"linestyle","none","marker","s","color","b","markersize","1")
+    plt.title(u"Simulated annealing QAP")
+    plt.ylabel(u"Valor objetivo")
+    plt.xlabel(u"Instancia")
+    plt.show()
+
+    graficoMejores = plt.plot(instancesC)
+    plt.setp(graficoMejores,"linestyle","none","marker","s","color","b","markersize","1")
+    plt.title(u"Simulated annealing QAP")
+    plt.ylabel(u"Valor objetivo actual")
+    plt.xlabel(u"Instancia")
     plt.show()
 
 # ---------------------------------
 def main():
-    print("hola")
+    print("Simulated annealing QAP")
     global distance, flow, beta, alpha
     nameD= "Dchr12a.dat"#input('Nombre del archivo de distancias: ')
     nameF= "Fchr12a.dat"#input('Nombre del archivo de flujos: ')
-    beta= .2#float(input('Ingrese valor de beta: '))
-    alpha= .99#float(input('Ingrese valor de alpha: '))
-    Tmax= 60000000#float(input('Ingrese temperatura máxima: '))
-    Tmin= 1#float(input('Ingrese temperatura mínima: '))
-    iteration= 200#int(input('Ingrese el numero de iteraciones: '))
+    beta= 1             #float(input('Ingrese valor de beta: '))
+    alpha= .99          #float(input('Ingrese valor de alpha: '))
+    Tmax= 12000000000   #float(input('Ingrese temperatura máxima: '))
+    Tmin= 1             #float(input('Ingrese temperatura mínima: '))
+    iteration= 100      #int(input('Ingrese el numero de iteraciones: '))
     distance= readFile(nameD)
     flow= readFile(nameF)
-    SA(Tmax, Tmin, iteration, 2)
+    #--------Instancias-----------------
+    i=0
+    while i < 20:
+        start_time = time.time()
+        instances_best_objetive.append(SA(Tmax, Tmin, iteration, 2))
+        time_instances.append((time.time() - start_time))
+        print("--- %s seconds ---" % (time.time() - start_time))
+        i+=1
+    #------------------------------------
+    #print(time_instances)
+    graficar_inst_20(instances_best_objetive, instances_best_objetive_current)
 
 main()
+
+#graficar(bestObjective, p, o, mejorObjetivo, temperature)
+
 #Prueba 1
 # Dchr12a.dat   Fchr12a.dat
 # beta= 0.2  alpha= 0.1  tMax= 50 tMin= 4 iter= 20 solucion= 46028
 # beta= 0.1  alpha= 0.2  tMax= 100 tMin= 4 iter= 50 solucion= 49854
 # Dchr18a.dat Fchr18a.dat
-#
