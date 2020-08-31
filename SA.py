@@ -9,7 +9,9 @@ distance = []
 flow = []
 bestObjective= []
 temperature= []
-instances= []
+instances_best_objetive= []
+instances_best_objetive_current= []
+time_instances= []
 p= []
 o= []
 alpha= 0
@@ -104,6 +106,7 @@ def SA(Tmax, Tmin, iteration, funtionT):
         else:
             t = t * alpha
     #graficar(bestObjective, p, o, mejorObjetivo, temperature)
+    instances_best_objetive_current.append(o)
     return mejorObjetivo
 
 #graficar
@@ -134,12 +137,20 @@ def graficar(bestObjective, p, o, mejorObjetivo, temperature):
     plt.show()
 
 #-------------
-def graficar_inst_20(instances):
-    graficoMejores = plt.plot(instances)
+def graficar_inst_20(instancesO,instancesC):
+    #x=range(20)
+    graficoMejores = plt.plot(instancesO)
     plt.setp(graficoMejores,"linestyle","none","marker","s","color","b","markersize","1")
     plt.title(u"Simulated annealing QAP")
     plt.ylabel(u"Valor objetivo")
-    plt.xlabel(u"Iteraciones")
+    plt.xlabel(u"Instancia")
+    plt.show()
+
+    graficoMejores = plt.plot(instancesC)
+    plt.setp(graficoMejores,"linestyle","none","marker","s","color","b","markersize","1")
+    plt.title(u"Simulated annealing QAP")
+    plt.ylabel(u"Valor objetivo actual")
+    plt.xlabel(u"Instancia")
     plt.show()
 
 # ---------------------------------
@@ -157,13 +168,15 @@ def main():
     flow= readFile(nameF)
     #--------Instancias-----------------
     i=0
-    while i < 10:
+    while i < 20:
         start_time = time.time()
-        instances.append(SA(Tmax, Tmin, iteration, 2))
+        instances_best_objetive.append(SA(Tmax, Tmin, iteration, 2))
+        time_instances.append((time.time() - start_time))
         print("--- %s seconds ---" % (time.time() - start_time))
         i+=1
     #------------------------------------
-    graficar_inst_20(instances)
+    #print(time_instances)
+    graficar_inst_20(instances_best_objetive, instances_best_objetive_current)
 
 main()
 
