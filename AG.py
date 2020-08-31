@@ -62,16 +62,16 @@ def selection_tournament(maxParents,maxIndividuals):
         copy_population = population.copy()
         random_population = []
         i = 0
-        print("------------------------")
+        print("------------------------Generar un padre")
         print("length_tournament",length_tournament)
         while i < length_tournament:
-            print("i: ",i)
+            #print("i: ",i)
             randIndividual = random.choice(copy_population)
             random_population.append(randIndividual)
             print("random_population: ",random_population)
             copy_population.remove(randIndividual)
-            print("copy_population",copy_population)
-            print()
+            #print("copy_population",copy_population)
+            #print()
             i += 1
 
         #Escoge el mejor de los guardados en random_population
@@ -83,6 +83,7 @@ def selection_tournament(maxParents,maxIndividuals):
             print("entro")
             random_population.remove(possible_parent)
             if len(random_population) == 0:
+                print("Entro al break")
                 break
             else:
                 ov_population = evaluate(random_population)
@@ -90,22 +91,59 @@ def selection_tournament(maxParents,maxIndividuals):
                 minIndividual_index = ov_population.index(min(ov_population))
                 possible_parent = random_population[minIndividual_index]
 
-        parents.append(random_population[ov_population.index(min(ov_population))])
+        if len(random_population) != 0:
+            parents.append(random_population[ov_population.index(min(ov_population))])
+            it_parent += 1
+
         print("Parents: ",parents)
-        it_parent += 1
+    return parents
 
-#PRUEBAS------------------------
-#flow = [[0,3,0,2],[3,0,0,1],[0,0,0,4],[2,1,4,0]]
-#distance = [[0,22,53,0],[22,0,40,0],[53,40,0,55],[0,0,55,0]]
+#Recombinación ordenada escogiendo 2 padres dominantes y cruzando esos dos con los demás
+def crossover(parents):
+    offsprings = []
+    dominant_parents = random.sample(parents, k=2)
+    print("dominant: ", dominant_parents)
+    for parent in dominant_parents:
+        for p in parents:
+            if parent != p:
+                print(len(p))
+                crosspoint1 = random.choice(range(0, int(len(p)/2)))
+                crosspoint2 = random.choice(range(int(len(p)/2),len(p)))
+                print("cp1: ",crosspoint1, "cp2: ", crosspoint2)
+                offspring = [0]*len(p)
+                print ("offspring1: ",offspring)
+                offspring[crosspoint1:crosspoint2+1] = parent[crosspoint1:crosspoint2+1] #copio tal cual el padre dominante
+                print ("offspring_medio: ",offspring)
 
-#hola = objectiveFunction([7,5,12,2,1,3,9,11,10,6,8,4])
-#hola2 = funcionObjetivo([7,5,12,2,1,3,9,11,10,6,8,4],flow,distance)
-#hola = objectiveFunction([3,13,6,4,18,12,10,5,1,11,8,7,17,14,9,16,15,2])
-#hola2 = funcionObjetivo([3,13,6,4,18,12,10,5,1,11,8,7,17,14,9,16,15,2],flow,distance)
-#print (hola)
-#print(hola2)
-#print(hola2)
-#PRUEBAS------------------------
+                if crosspoint2 != len(p)-1:
+                    crosspoint2+=1
+                    crosspoint2_p = crosspoint2 #padre no dominante
+                    crosspoint2_os = crosspoint2 #offspring
+                else:
+                    crosspoint2 = 0
+                    crosspoint2_p = crosspoint2 #padre no dominante
+                    crosspoint2_os = crosspoint2 #offspring
+
+                while 0 in offspring:
+                    if p[crosspoint2_p] not in offspring:
+                        offspring[crosspoint2_os] = p[crosspoint2_p]
+                        if crosspoint2_p != len(p)-1:
+                            crosspoint2_p+=1
+                        else:
+                            crosspoint2_p = 0
+                        if crosspoint2_os != len(offspring)-1:
+                            crosspoint2_os+=1
+                        else:
+                            crosspoint2_os = 0
+                    else:
+                        if crosspoint2_p != len(p)-1:
+                            crosspoint2_p+=1
+                        else:
+                            crosspoint2_p = 0
+
+                print ("offspring_final: ",offspring)
+                offsprings.append(offspring)
+    return offsprings
 
 #--------------MAIN------------
 #Copiar y pegar en una función AG()
@@ -113,24 +151,32 @@ def AG():
     generation = 0
     while generation < maxGenerations:
         #a. Evaluar
-        print("population",population)
+        #print("population",population)
         ov_population = evaluate(population)
-        print("ov_population",ov_population)
+        #print("ov_population",ov_population)
         of_result.append(min(ov_population))
         solution_result.append(population[ov_population.index(min(ov_population))])
-        print ("of_result",of_result)
-        print ("solution_result", solution_result)
-        print()
-
+        #print ("of_result",of_result)
+        #print ("solution_result", solution_result)
+        #print()
+#--------------------------------------
         #b. Seleccion de los padres
-        #selection_tournament(maxIndividuals/2,maxIndividuals)
-
+        parents = selection_tournament(int(maxIndividuals/2),maxIndividuals)
+#--------------------------------------
         #c. Reproduccion
         #    - Recombinacion
+        offsprings = crossover(parents)
+#--------------------------------------
         #    - Mutacion
+
+#--------------------------------------
         #d. Reemplazo
+
+#--------------------------------------
         generation += 1
 
+'''
+#PRUEBAS------------------------
 
 fileNameFlow = input("Ingrese el nombre del archivo de flujo: ")
 fileNameDistance = input("Ingrese el nombre del archivo de distancias: ")
@@ -139,5 +185,10 @@ distance = readFile(fileNameDistance)
 maxIndividuals = int(input("Ingrese la cantidad maxima de individuos en una poblacion: "))
 maxGenerations = int(input("Ingrese la cantidad maxima de generaciones: "))
 initialPopulation(maxIndividuals, len(distance[0]))
-selection_tournament(int(maxIndividuals/2),maxIndividuals)
+#parents = selection_tournament(int(maxIndividuals/2),maxIndividuals)
+'''
+parents=[[1,2,3,4,5,6,7,8,9],[9,3,7,8,2,6,5,1,4]]
+print("\nparents2: ",parents)
+crossover(parents)
+
 #AG()
