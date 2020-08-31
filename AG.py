@@ -7,6 +7,7 @@ of_result = [] #Arreglo de mejor función objetivo de cada generacion
 solution_result = [] #Arreglo de solución objetivo de cada generación
 flow = [] #Datos de la matriz de flujo
 distance = [] #Datos de la matriz de distancias
+population_with_ov = []
 
 #FUNCIONES
 def readFile(name):
@@ -37,7 +38,7 @@ def neighborhood(solution):
     print("swap entre posicion: ",p0,"y ",p1)
     neighbour= swap(p0,p1,solution)
     return neighbour
-    
+
 #Falta revisar repetidos
 #Generar la población inicial
 def initialPopulation(maxIndividuals, positions):
@@ -61,11 +62,14 @@ def objectiveFunction(solution):
     return sum
 
 #Evaluación de cada individuo de la población en la función objetivo
-def evaluate(population):
+def evaluate(population,attach):
     ov_population = [] #Objective values: Valores objetivos de cada individuo de la población
     i = 0
     while i < len(population):
         ov_population.append(objectiveFunction(population[i]))
+        if attach:
+            aux = [population[i],objectiveFunction(population[i])]
+            population_with_ov.append(aux)
         i += 1
     return ov_population
 
@@ -81,17 +85,17 @@ def selection_tournament(maxParents,maxIndividuals):
         print("------------------------Generar un padre")
         print("length_tournament",length_tournament)
         while i < length_tournament:
-            #print("i: ",i)
+            print("i: ",i)
             randIndividual = random.choice(copy_population)
             random_population.append(randIndividual)
             print("random_population: ",random_population)
             copy_population.remove(randIndividual)
-            #print("copy_population",copy_population)
-            #print()
+            print("copy_population",copy_population)
+            print()
             i += 1
 
         #Escoge el mejor de los guardados en random_population
-        ov_population = evaluate(random_population)
+        ov_population = evaluate(random_population,False)
         print("ov_population: ", ov_population)
         minIndividual_index = ov_population.index(min(ov_population))
         possible_parent = random_population[minIndividual_index]
@@ -102,7 +106,7 @@ def selection_tournament(maxParents,maxIndividuals):
                 print("Entro al break")
                 break
             else:
-                ov_population = evaluate(random_population)
+                ov_population = evaluate(random_population,False)
                 print("ov_population: ", ov_population)
                 minIndividual_index = ov_population.index(min(ov_population))
                 possible_parent = random_population[minIndividual_index]
@@ -177,6 +181,17 @@ def mutation(offsprings,mutationProbability):
             #GUardar en la misma posición de la lista
     print ("OFFSPRINGS mutated:",offsprings)
     return offsprings
+
+#Reemplazo de los hijos en la nueva población para la siguiente generación:
+def replaceOffsprings(offsprings):
+    population_with_ov = []
+
+'''
+Lista_hijos_evaluada = evaluar en función objetivo cada hijo generado y asignarlo
+población= Asignar 70% de la lista_hijos_evaluada  + 30% de funcionObjetivo_población
+'''
+
+
 #--------------MAIN------------
 #Copiar y pegar en una función AG()
 def AG():
@@ -184,7 +199,11 @@ def AG():
     while generation < maxGenerations:
         #a. Evaluar
         #print("population",population)
-        ov_population = evaluate(population)
+        ov_population = evaluate(population,True)
+        print("ov_population: ",ov_population)
+        print("population: ",population)
+        print("population with ov: ",population_with_ov)
+        exit()
         #print("ov_population",ov_population)
         of_result.append(min(ov_population))
         solution_result.append(population[ov_population.index(min(ov_population))])
@@ -200,14 +219,14 @@ def AG():
         offsprings = crossover(parents)
 #--------------------------------------
         #    - Mutacion
-        offsprings_mutated = mutation(offsprings)
+        offsprings_mutated = mutation(offsprings,mutationProbability)
 #--------------------------------------
         #d. Reemplazo
 
 #--------------------------------------
         generation += 1
 
-'''
+
 #PRUEBAS------------------------
 
 fileNameFlow = input("Ingrese el nombre del archivo de flujo: ")
@@ -216,12 +235,14 @@ flow = readFile(fileNameFlow)
 distance = readFile(fileNameDistance)
 maxIndividuals = int(input("Ingrese la cantidad maxima de individuos en una poblacion: "))
 maxGenerations = int(input("Ingrese la cantidad maxima de generaciones: "))
+mutationProbability = input("Ingrese una probabilidad de mutacion: ")
 initialPopulation(maxIndividuals, len(distance[0]))
+AG()
 #parents = selection_tournament(int(maxIndividuals/2),maxIndividuals)
-'''
-parents=[[1,2,3,4,5,6,7,8,9],[9,3,7,8,2,6,5,1,4]]
+print("population_with_ov: ",population_with_ov)
+#parents=[[1,2,3,4,5,6,7,8,9],[9,3,7,8,2,6,5,1,4]]
 print("\nparents2: ",parents)
 #crossover(parents)
-hola = mutation(parents,0.2)
+#hola = mutation(parents,0.2)
 
 #AG()
