@@ -92,7 +92,7 @@ def evaluate_population(attach):
 def selection_tournament(maxParents,maxIndividuals):
     #print("population: ", population)
     parents = []
-    length_tournament = round(0.4*maxIndividuals)
+    length_tournament = round(0.1*maxIndividuals)
     it_parent = 0
 
 #
@@ -117,8 +117,8 @@ def selection_tournament(maxParents,maxIndividuals):
         parents.append(possible_parent)
         it_parent += 1
     #print("while maxParents terminada")
-    print("Parents: ",parents)
-    print()
+    #print("Parents: ",parents)
+    #print()
     return parents
 
 #Recombinación ordenada escogiendo 2 padres dominantes y cruzando esos dos con los demás
@@ -276,7 +276,7 @@ while generation < maxGenerations:
     #    - Mutacion
     print("Mutacion: ")
     offsprings_mutated = mutation(offsprings,mutationProbability)
-    print("HIJOS NUEVOS: ",offsprings_mutated)
+    #print("HIJOS NUEVOS: ",offsprings_mutated)
 #--------------------------------------
     #d. Reemplazo
     print("Reemplazo: ")
@@ -288,7 +288,7 @@ while generation < maxGenerations:
 #    print("new_solutions: ", new_solutions)
     population = new_solutions.copy()
     #print("population nueva: ", population)
-    print("POBLACION FINAL DEL GENERATE: ", population)
+    #print("POBLACION FINAL DEL GENERATE: ", population)
 #--------------------------------------
     generation += 1
     print()
