@@ -111,8 +111,8 @@ def selection_tournament(maxParents,maxIndividuals):
         it_parent += 1
 
     #print("while maxParents terminada")
-    print("Parents: ",parents)
-    print()
+    #print("Parents: ",parents)
+    #print()
     return parents
 
 #Recombinación ordenada escogiendo 2 padres dominantes y cruzando esos dos con los demás
