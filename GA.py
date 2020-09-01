@@ -1,6 +1,7 @@
 import random
 from random import randint
 import matplotlib.pyplot as plt
+import numpy as np
 
 """
     La poblacion se define como una lista que contiene un diccionario entonces
@@ -56,7 +57,7 @@ def tournament(population, size_population):
     parents = []
 
     tour_times = 50 #para la cantidad de padres
-    tour_size = 20 #los individuos que participan en el torneo
+    tour_size = 5 #los individuos que participan en el torneo
 
     for _ in range(tour_times):
         tournament = []
@@ -116,58 +117,46 @@ def mutation(offspring,mutationProbability):
         offspring = neighborhood(offspring)
     return offspring
 
-def crossover(parents,mutationProbability):
+
+def recombination(parents,mutationProbability,offsprings_size):
     offsprings = []
-    print("parents: ",len(parents))
-    #dominant_parents = random.sample(parents, k=3)
-    dominant_parents = []
-    index_1 = random.randint(0,len(parents)-1)
-    index_2 = random.randint(0,len(parents)-1)
-    if index_1 == index_2 and index_2 == len(parents-1):
-        index_2 -= 1
-    dominant_parents.append(parents[index_1])
-    dominant_parents.append(parents[index_2])
-
-    for parent in dominant_parents:
-        for p in parents:
-            if parent != p:
-                crosspoint1 = random.choice(list(range(0, int(len(p['solucion'])/2))))
-                crosspoint2 = random.choice(list(range(int(len(p['solucion'])/2),len(p['solucion']))))
-                offspring = {
-                    'valor_objetivo': 0,
-                    'solucion': [0]*len(p['solucion'])
-                }
-                offspring['solucion'][crosspoint1:crosspoint2+1] = parent['solucion'][crosspoint1:crosspoint2+1] #copio tal cual el padre dominante
-
-                if crosspoint2 != len(p['solucion'])-1:
-                    crosspoint2+=1
-                    crosspoint2_p = crosspoint2 #padre no dominante
-                    crosspoint2_os = crosspoint2 #offspring
-                else:
-                    crosspoint2 = 0
-                    crosspoint2_p = crosspoint2 #padre no dominante
-                    crosspoint2_os = crosspoint2 #offspring
-
-                while 0 in offspring['solucion']:
-                    if p['solucion'][crosspoint2_p] not in offspring['solucion']:
-                        offspring['solucion'][crosspoint2_os] = p['solucion'][crosspoint2_p]
-                        if crosspoint2_p != len(p['solucion'])-1:
-                            crosspoint2_p+=1
-                        else:
-                            crosspoint2_p = 0
-                        if crosspoint2_os != len(offspring['solucion'])-1:
-                            crosspoint2_os+=1
-                        else:
-                            crosspoint2_os = 0
-                    else:
-                        if crosspoint2_p != len(p['solucion'])-1:
-                            crosspoint2_p+=1
-                        else:
-                            crosspoint2_p = 0
-                offspring['solucion'] = mutation(offspring['solucion'],mutationProbability)
-                offsprings.append(offspring)
-                print("OFFSPRINGS: ",offsprings)
+    it_offspring = 0
+    while it_offspring < offsprings_size:
+        p = random.sample(parents, k=2)
+        offspring1, offspring2 = one_point_crossover(p[0]['solucion'],p[1]['solucion'])
+        offspring_1 = {
+            'valor_objetivo': 0,
+            'solucion': offspring1
+        }
+        offspring_2 = {
+            'valor_objetivo': 0,
+            'solucion': offspring2
+        }
+        offspring_1['solucion'] = mutation(offspring_1['solucion'],mutationProbability)
+        offspring_2['solucion'] = mutation(offspring_2['solucion'],mutationProbability)
+        offsprings.append(offspring_1)
+        offsprings.append(offspring_2)
+        it_offspring += 2
     return offsprings
+
+def one_point_crossover(parent1, parent2):
+    #x = int((len(parent1))/2)
+    x = int(len(parent1)/2)
+    offspring1_new = np.append(parent1[:x], [0]*x)
+    i = 6
+    while 0 in offspring1_new:
+        for element in parent2:
+            if element not in offspring1_new:
+                offspring1_new[i] = element
+                i+=1
+    j = 6
+    offspring2_new = np.append(parent2[:x], [0]*x)
+    while 0 in offspring2_new:
+        for element in parent1:
+            if element not in offspring2_new:
+                offspring2_new[j] = element
+                j+=1
+    return offspring1_new, offspring2_new
 
 def replaceOffsprings(offsprings, size_population,population):
     new_population = []
@@ -183,7 +172,7 @@ def graficar(mejorObjetivo):
     plt.setp(graficoMejores,"linestyle","none","marker","s","color","b","markersize","1")
     plt.title(u"Algoritmo Genético QAP")
     plt.ylabel(u"Valor objetivo")
-    plt.xlabel(u"Valor Óptimo : " + str(mejorObjetivo))
+    plt.xlabel(u"Valor Óptimo : " + str(min(mejorObjetivo)))
     plt.show()
 
 
@@ -206,9 +195,9 @@ def run(size_population, generations, size_solution,mutationProbability):
         parents = tournament(population, size_population)
         #printPopulation(parents,10)
         #reprodusco
-        offsprings = crossover(parents,mutationProbability)
-        print("Reproduccion con len: ",offsprings[0])
-        #printPopulation(offsprings,5)
+        offsprings = recombination(parents,mutationProbability,size_population)
+        print("Reproduccion con len: ", len(offsprings))
+        printPopulation(offsprings,10)
 
         #reemplazo
 
@@ -216,20 +205,22 @@ def run(size_population, generations, size_solution,mutationProbability):
         #printPopulation(population,10)
         print("Reemplazo con len: ",len(population))
         print()
+        random.shuffle(population)
 
 
     population = evaluatePopulation(population)
     best_objective_value = minPopulation(population)
     of_result.append(best_objective_value['valor_objetivo'])
     solution_result.append(best_objective_value['solucion'])
+    print("SOLUTION_RESULT: ",solution_result)
     graficar(of_result)
 ############# Valores de entrada ##################
 # CAMBIAR!
 
-generations = 200
-size_population = 100
+generations = 30
+size_population = 500
 size_solution = 12
-mutationProbability = 0.2
+mutationProbability = 0.5
 distance = []
 flow = []
 of_result = [] #Arreglo de mejor función objetivo de cada generacion
