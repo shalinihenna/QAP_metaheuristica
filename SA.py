@@ -9,18 +9,25 @@ import time
 
 distance = []
 flow = []
-bestObjective= []
+bestObjective= [] # mejores objetivos de cada temperatura
 temperature= []
-
-inst_best_objetive= []
-inst_best_objetive_t= []
-inst_best_objetive_current= []
-time_instances= []
-
 p= []
-o= []
+o= [] # mejores objetivos actuales para cada iteracion con UNA temperatura
 alpha= 0
-beta= 0
+iteration= 0
+time_instances= []
+#------------- Instancias 20 ---------------
+inst_best_objetive= []          # mejor objetivo de SA
+inst_best_objetive_t= []        # mejores objetivos de cada temperatura
+inst_best_objetive_current= []  # mejores objetivos para cada iteracion con UNA temperatura
+#-------------------------------------------
+#------------- Grafico dual---------------
+bestObjective_dual= []
+temperature_dual= []
+p_dual= []
+o_dual= []
+#-------------------------------------------
+
 
 GA=[[10, 5, 9, 6, 7, 11, 8, 4, 12, 3, 2, 1], array([11,  6,  1,  3,  5, 12,  7,  8,  2, 10,  9,  4]), array([ 7,  5,  1,  3,  2, 10,  8,  6,  4, 11,  9, 12]), array([ 7,  5,  1,  3,  2, 10,  8, 11,  9,  6, 12,  4]), array([ 7,  5,  1, 10,  2,  3, 12, 11,  9,  6,  8,  4]), array([ 7,  1,  5,  8,  2, 10,  3, 11,  9,  6, 12,  4]), array([ 7,  5,  1,  2, 10,  3,  8, 11,  9,  6, 12,  4]), array([ 7,  5,  1,  2, 10,  3,  8, 11,  9,  6, 12,  4]), array([ 7,  5,  1,  2, 10,  3,  8, 11,  9,  6, 12,  4]), array([ 7,  5,  1,  2, 10,  3,  8, 11,  9,  6, 12,  4]), array([ 7,  5, 10,  2,  1,  3,  8, 11,  9,  6, 12,  4]), array([ 7,  5, 10,  2,  1,  3,  8, 11,  9,  6, 12,  4]), array([ 7,  5,  9,  2,  1,  3, 12, 11, 10,  6,  8,  4]), array([ 7,  5, 10,  2,  1,  3,  8, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11,  9,  6, 12,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11,  9,  6, 12,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4])]
 
@@ -78,10 +85,13 @@ def objectiveFunction(solution):
 #           iteration = máximo de iteraciones internas
 #           funtionT = función de enfriamiento
 # salida: matriz con los datos
-def SA(Tmax, Tmin, iteration, funtionT):
-    global o,bestObjective
-    o=[]
-    bestObjective= []
+def SA(Tmax, Tmin, iteration):
+    #global o,p,bestObjective,temperature
+    #o=[]
+    #p= []
+    #bestObjective= []
+    #temperature= []
+
     s0= initialSolution(len(distance))  #Solución inicial
     sCurrent= s0.copy()                 #Solución actual
     t=Tmax                              #Temperatura Máxima
@@ -99,7 +109,7 @@ def SA(Tmax, Tmin, iteration, funtionT):
             if delta < 0:
                 sCurrent=sNew.copy()
                 ofActual=ofNuevo
-                if ofNuevo < mejorObjetivo:
+            if ofNuevo < mejorObjetivo:
                     mejorObjetivo = ofNuevo
                     mejorSolucion = sNew.copy()
             else:
@@ -112,19 +122,17 @@ def SA(Tmax, Tmin, iteration, funtionT):
             temperature.append(t)
             it+=1
         bestObjective.append(mejorObjetivo)
-        if funtionT == 1:
-            t = t - beta
-        else:
-            t = t * alpha
-    #graficar(bestObjective, p, o, mejorObjetivo, temperature)
-    inst_best_objetive_current.append(o)
+        t = t * alpha
+
+    graficar(bestObjective, p, o, mejorObjetivo, temperature)
+    '''inst_best_objetive_current.append(o)
     inst_best_objetive_t.append(bestObjective)
+    p_dual.append(p)
+    o_dual.append(o)'''
 
     return mejorObjetivo
 
 
-# Grafica_ grafico con los mejores obetivos, la probabilidad de aceptación,
-# el mejor objetivo encontrado por cada temperatura, y la funcion de temperatura
 def graficar(bestObjective, p, o, mejorObjetivo, temperature):
     graficoMejores = plt.plot(bestObjective)
     plt.setp(graficoMejores,"linestyle","none","marker","s","color","b","markersize","1")
@@ -140,7 +148,7 @@ def graficar(bestObjective, p, o, mejorObjetivo, temperature):
     plt.show()
 
     grafico = plt.plot(p)
-    plt.setp(grafico,"linestyle","none","marker","s","color","indigo","markersize","1")
+    plt.setp(grafico,"linestyle","none","marker","s","color","g","markersize","1")
     plt.ylabel(u"Probabilidad")
     plt.xlabel(u"Valor Óptimo : " + str(mejorObjetivo))
     plt.show()
@@ -150,8 +158,6 @@ def graficar(bestObjective, p, o, mejorObjetivo, temperature):
     plt.ylabel(u"Temperatura")
     plt.xlabel(u"Valor Óptimo : " + str(mejorObjetivo))
     plt.show()
-
-#------------------
 # Grafico de las 20 instancias al ejecutar una misma configuración
 def graficar_inst_20(instancesO,instancesC):
     #x=range(20)
@@ -174,10 +180,9 @@ def graficar_inst_20(instancesO,instancesC):
     plt.title(u"Simulated annealing QAP")
     plt.ylabel(u"Valor objetivo")
     plt.xlabel(u"Iteraciones")
-    plt.show()
+    # plt.show()
 
-#------------------
-# Gráfico de cajas y bigotes
+#----------------- Gráfico de cajas y bigotes---------------------
 # Comparativa de metaheuristicas con configuraciones iguales
 def grafico_cajas(ov_meta1, ov_meta2):
     d1=list(set(ov_meta1))
@@ -190,36 +195,66 @@ def grafico_cajas(ov_meta1, ov_meta2):
     ax.boxplot(data)
     plt.show()
 
-
-# ---------------------------------
-def main():
-    print("Simulated annealing QAP")
-    global distance, flow, beta, alpha
-    nameD= "Dchr12a.dat"#input('Nombre del archivo de distancias: ')
-    nameF= "Fchr12a.dat"#input('Nombre del archivo de flujos: ')
-    beta= 1             #float(input('Ingrese valor de beta: '))
-    alpha= .99          #float(input('Ingrese valor de alpha: '))
-    Tmax= 12000000000   #float(input('Ingrese temperatura máxima: '))
-    Tmin= 1             #float(input('Ingrese temperatura mínima: '))
-    iteration= 100      #int(input('Ingrese el numero de iteraciones: '))
-    distance= readFile(nameD)
-    flow= readFile(nameF)
-    #--------Instancias-----------------
+#------------------------ 20 INSTANCIAS---------------------------
+def instances_20():
     i=0
     while i < 20:
         start_time = time.time()
-        inst_best_objetive.append(SA(Tmax, Tmin, iteration, 2))
+        inst_best_objetive.append(SA(Tmax, Tmin, iteration))
         time_instances.append((time.time() - start_time))
         print("--- %s seconds ---" % (time.time() - start_time))
         i+=1
     #------------------------------------
-    ov_GA=[]
-    for elem in GA:
-        ov_GA.append(objectiveFunction(elem))
-    print(min(inst_best_objetive_t[0]))
-    #graficar_inst_20(inst_best_objetive, inst_best_objetive_current)
-    grafico_cajas(inst_best_objetive_t[0], ov_GA)
+    graficar_inst_20(inst_best_objetive, inst_best_objetive_current)
+
+
+# ------------ MAIN ---------------------
+def main():
+    print("Simulated annealing QAP")
+    global distance, flow, iteration, alpha
+    mejorObjetivo_dual=[]
+
+    #------------------ CONFIGURACION-------------------------
+
+    alpha= .99          #float(input('Ingrese valor de alpha: '))
+    Tmax= 10000         #float(input('Ingrese temperatura máxima: '))
+    Tmin= 4             #float(input('Ingrese temperatura mínima: '))
+    iteration= 20       #int(input('Ingrese el numero de iteraciones: '))
+
+    #------------------ ARCHIVO 1-------------------------
+    '''nameD= "Dchr12a.dat"#input('Nombre del archivo de distancias: ')
+    nameF= "Fchr12a.dat"#input('Nombre del archivo de flujos: ')
+    distance= readFile(nameD)
+    flow= readFile(nameF)
+
+    #mejorObjetivo_dual.append(SA(Tmax, Tmin, iteration))
+    mejorObjetivo=SA(Tmax, Tmin, iteration)
+    bestObjective_dual.append(bestObjective)
+    temperature_dual.append(temperature)
+    #p_dual.append(p)
+    #o_dual.append(o)'''
+
+    #------------------ ARCHIVO 2-------------------------
+    nameD= "Dchr18a.dat"#input('Nombre del archivo de distancias: ')
+    nameF= "Fchr18a.dat"#input('Nombre del archivo de flujos: ')
+    distance= readFile(nameD)
+    flow= readFile(nameF)
+
+    #mejorObjetivo_dual.append(SA(Tmax, Tmin, iteration))
+    mejorObjetivo=SA(Tmax, Tmin, iteration)
+
+    #bestObjective_dual.append(bestObjective)
+    #temperature_dual.append(temperature)
+    #graficar(bestObjective, p, o, mejorObjetivo, temperature)
+    #p_dual.append(p)
+    #o_dual.append(o)
+
+    #graficar(bestObjective_dual, p_dual, o_dual, mejorObjetivo_dual, temperature_dual)
+
+    #------------------COMPARATION-------------------------
+    #ov_GA=[]
+    #for elem in GA:
+    #    ov_GA.append(objectiveFunction(elem))
+    #grafico_cajas(inst_best_objetive_t[0], ov_GA)
 
 main()
-
-#graficar(bestObjective, p, o, mejorObjetivo, temperature)
