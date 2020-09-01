@@ -2,6 +2,7 @@ import random
 from random import randint
 import matplotlib.pyplot as plt
 import numpy as np
+import time
 
 """
     La poblacion se define como una lista que contiene un diccionario entonces
@@ -178,33 +179,26 @@ def graficar(mejorObjetivo):
 
 def run(size_population, generations, size_solution,mutationProbability):
     #Genero la poblacion inicial
+    of_result= []
+    solution_result= []
     population = initialPopulation(size_population,size_solution)
     #printPopulation(population,100)
-
     #Por cada generacion
     for i in range(generations):
-        print("Generation: ",i)
         #Evaluo population
-        print("Evaluacion")
         population = evaluatePopulation(population)
         best_objective_value = minPopulation(population)
         of_result.append(best_objective_value['valor_objetivo'])
         solution_result.append(best_objective_value['solucion'])
         #Selecciono padres
-        print("Seleccion")
         parents = tournament(population, size_population)
         #printPopulation(parents,10)
         #reprodusco
         offsprings = recombination(parents,mutationProbability,size_population)
-        print("Reproduccion con len: ", len(offsprings))
-        printPopulation(offsprings,10)
-
+        #printPopulation(offsprings,10)
         #reemplazo
-
         population = replaceOffsprings(offsprings,size_population,population)
         #printPopulation(population,10)
-        print("Reemplazo con len: ",len(population))
-        print()
         random.shuffle(population)
 
 
@@ -212,11 +206,41 @@ def run(size_population, generations, size_solution,mutationProbability):
     best_objective_value = minPopulation(population)
     of_result.append(best_objective_value['valor_objetivo'])
     solution_result.append(best_objective_value['solucion'])
+
+    return of_result
+
+
     print("SOLUTION_RESULT: ",solution_result)
-    graficar(of_result)
+
+#------------------
+# Grafico de las 20 instancias al ejecutar una misma configuración
+def graficar_inst_20(instancesO,instancesC):
+    #x=range(20)
+    graficoMejores = plt.plot(instancesO)
+    plt.setp(graficoMejores,"linestyle","none","marker","s","color","b","markersize","1")
+    plt.title(u"Simulated annealing QAP")
+    plt.ylabel(u"Valor objetivo")
+    plt.xlabel(u"Instancia")
+    plt.show()
+
+    colors =  ['black','red','gray','orange','gold','yellow','green','aqua','blue','indigo','pink']
+
+    print(len(instancesC))
+    cont=0
+    for i in instancesC:
+        graficoMejores = plt.plot(i)
+        plt.setp(graficoMejores,"linestyle","none","marker","s","color",colors[cont],"markersize","1")
+        cont+=1
+    plt.title(u"Algoritmo Genetico QAP")
+    plt.ylabel(u"Valor objetivo")
+    plt.xlabel(u"Iteraciones")
+    plt.show()
+
 ############# Valores de entrada ##################
 # CAMBIAR!
-
+time_instances= []
+inst_best_objetive= []
+inst_best_objetive_current= []
 generations = 50
 size_population = 1000
 size_solution = 12
@@ -229,4 +253,16 @@ solution_result = [] #Arreglo de solución objetivo de cada generación
 distance= readFile("Dchr12a.dat")
 flow= readFile("Fchr12a.dat")
 #contiene la poblacion final
-population = run(size_population, generations, size_solution,mutationProbability)
+#population = run(size_population, generations, size_solution,mutationProbability)
+#--------Instancias-----------------
+i=0
+while i < 11:
+    start_time = time.time()
+    ints= run(size_population, generations, size_solution,mutationProbability)
+    inst_best_objetive_current.append(ints)
+    inst_best_objetive.append(min(ints))
+    time_instances.append((time.time() - start_time))
+    print("--- %s seconds ---" % (time.time() - start_time))
+    i+=1
+#------------------------------------
+graficar_inst_20(inst_best_objetive, inst_best_objetive_current)

@@ -11,13 +11,18 @@ distance = []
 flow = []
 bestObjective= []
 temperature= []
+
 inst_best_objetive= []
+inst_best_objetive_t= []
 inst_best_objetive_current= []
 time_instances= []
+
 p= []
 o= []
 alpha= 0
 beta= 0
+
+GA=[[10, 5, 9, 6, 7, 11, 8, 4, 12, 3, 2, 1], array([11,  6,  1,  3,  5, 12,  7,  8,  2, 10,  9,  4]), array([ 7,  5,  1,  3,  2, 10,  8,  6,  4, 11,  9, 12]), array([ 7,  5,  1,  3,  2, 10,  8, 11,  9,  6, 12,  4]), array([ 7,  5,  1, 10,  2,  3, 12, 11,  9,  6,  8,  4]), array([ 7,  1,  5,  8,  2, 10,  3, 11,  9,  6, 12,  4]), array([ 7,  5,  1,  2, 10,  3,  8, 11,  9,  6, 12,  4]), array([ 7,  5,  1,  2, 10,  3,  8, 11,  9,  6, 12,  4]), array([ 7,  5,  1,  2, 10,  3,  8, 11,  9,  6, 12,  4]), array([ 7,  5,  1,  2, 10,  3,  8, 11,  9,  6, 12,  4]), array([ 7,  5, 10,  2,  1,  3,  8, 11,  9,  6, 12,  4]), array([ 7,  5, 10,  2,  1,  3,  8, 11,  9,  6, 12,  4]), array([ 7,  5,  9,  2,  1,  3, 12, 11, 10,  6,  8,  4]), array([ 7,  5, 10,  2,  1,  3,  8, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11,  9,  6, 12,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11,  9,  6, 12,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4])]
 
 # readFile: función que lee el archivo con los datos
 # entrada: nombre del archivo
@@ -74,8 +79,9 @@ def objectiveFunction(solution):
 #           funtionT = función de enfriamiento
 # salida: matriz con los datos
 def SA(Tmax, Tmin, iteration, funtionT):
-    global o
+    global o,bestObjective
     o=[]
+    bestObjective= []
     s0= initialSolution(len(distance))  #Solución inicial
     sCurrent= s0.copy()                 #Solución actual
     t=Tmax                              #Temperatura Máxima
@@ -112,6 +118,7 @@ def SA(Tmax, Tmin, iteration, funtionT):
             t = t * alpha
     #graficar(bestObjective, p, o, mejorObjetivo, temperature)
     inst_best_objetive_current.append(o)
+    inst_best_objetive_t.append(bestObjective)
 
     return mejorObjetivo
 
@@ -155,9 +162,10 @@ def graficar_inst_20(instancesO,instancesC):
     plt.xlabel(u"Instancia")
     plt.show()
 
-    colors =  ['black','red','gray','orange','gold','yellow','green','aqua','blue','indigo','pink']
+    colors =  ['black','red','gray','orange','gold','yellow','green','aqua','blue','indigo','pink','magenta','cyan','purple', 'teal'
+    , 'lime','turquoise','coral','navy','brown']
 
-    print(len(instancesC))
+    #print(len(instancesC))
     cont=0
     for i in instancesC:
         graficoMejores = plt.plot(i)
@@ -172,10 +180,14 @@ def graficar_inst_20(instancesO,instancesC):
 # Gráfico de cajas y bigotes
 # Comparativa de metaheuristicas con configuraciones iguales
 def grafico_cajas(ov_meta1, ov_meta2):
-    data=[ov_meta1,ov_meta2]
-    fig7, ax7 = plt.subplots()
-    ax7.set_title('Multiple Samples with Different sizes')
-    ax7.boxplot(data)
+    d1=list(set(ov_meta1))
+    d2=list(set(ov_meta2))
+    print("d1 ov_meta1", d1)
+    print("d2 ov_meta2", d2)
+    data=[d1,d2]
+    fig,ax = plt.subplots()
+    ax.set_title('Comparativa entre dos metaheuristicas distintas')
+    ax.boxplot(data)
     plt.show()
 
 
@@ -194,25 +206,20 @@ def main():
     flow= readFile(nameF)
     #--------Instancias-----------------
     i=0
-    while i < 3:
+    while i < 20:
         start_time = time.time()
         inst_best_objetive.append(SA(Tmax, Tmin, iteration, 2))
         time_instances.append((time.time() - start_time))
         print("--- %s seconds ---" % (time.time() - start_time))
         i+=1
     #------------------------------------
+    ov_GA=[]
+    for elem in GA:
+        ov_GA.append(objectiveFunction(elem))
+    print(min(inst_best_objetive_t[0]))
     #graficar_inst_20(inst_best_objetive, inst_best_objetive_current)
-    grafico_cajas(inst_best_objetive, inst_best_objetive)
+    grafico_cajas(inst_best_objetive_t[0], ov_GA)
 
 main()
 
 #graficar(bestObjective, p, o, mejorObjetivo, temperature)
-
-#CONFIGURACIONES
-# CONFIG 1
-# Dchr12a.dat   Fchr12a.dat
-# beta= 0.2  alpha= 0.1  tMax= 50 tMin= 4 iter= 20 solucion= 46028
-# beta= 0.1  alpha= 0.2  tMax= 100 tMin= 4 iter= 50 solucion= 49854
-
-# CONFIG 2
-# Dchr18a.dat Fchr18a.dat
