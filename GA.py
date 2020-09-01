@@ -217,8 +217,8 @@ def run(size_population, generations, size_solution,mutationProbability):
 ############# Valores de entrada ##################
 # CAMBIAR!
 
-generations = 30
-size_population = 500
+generations = 50
+size_population = 1000
 size_solution = 12
 mutationProbability = 0.5
 distance = []
