@@ -5,16 +5,16 @@
 # Dchr32a.dat Fchr32a.dat
 
 # CONFIG 1
-# alpha= 0.2   tMax= 10000  tMin= 4  iter= 20
-# alpha= .99   tMax= 10000  tMin= 4  iter= 20
+# alpha= 0.2   tMax= 100000  tMin= 4  iter= 20
+# alpha= .99   tMax= 100000  tMin= 4  iter= 20
 
 # CONFIG 2
 # alpha= 0.7   tMax= 1000   tMin= 4  iter= 20
 # alpha= 0.7   tMax= 100000 tMin= 4  iter= 20
 
 # CONFIG 3
-# alpha= 0.7   tMax= 10000  tMin= 4  iter= 20
-# alpha= 0.7   tMax= 10000  tMin= 4  iter= 100
+# alpha= 0.7   tMax= 100000  tMin= 4  iter= 20
+# alpha= 0.7   tMax= 100000  tMin= 4  iter= 100
 
 
 #---------------------   GA   ------------------------------
