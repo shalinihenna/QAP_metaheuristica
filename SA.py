@@ -172,20 +172,7 @@ def graficar_inst_20(instancesO,instancesC):
 # Gráfico de cajas y bigotes
 # Comparativa de metaheuristicas con configuraciones iguales
 def grafico_cajas(ov_meta1, ov_meta2):
-    # Cambio los colores para que se vea bien en VSC con tema oscura
-    #print(ov_meta1)
-    #g= array([ov_meta1, ov_meta2])
-    #g.flatten()
-    #print(g)
-    #plt.boxplot(g,#[jap, ale, arg]
-    #            notch=True, patch_artist=True,
-    #            capprops=dict(color="green"),
-    #            medianprops=dict(color="orange"))
-    #plt.xticks([1, 2], ['Meta1', 'Meta2'])
-    #plt.ylabel('Instancias')
-    data=[]
-    d2 = concatenate((ov_meta1, ov_meta2))
-    data = [data, d2, d2[::2]]
+    data=[ov_meta1,ov_meta2]
     fig7, ax7 = plt.subplots()
     ax7.set_title('Multiple Samples with Different sizes')
     ax7.boxplot(data)
