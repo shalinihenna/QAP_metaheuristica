@@ -68,12 +68,7 @@ def evaluate(populations,attach):
     ov_population = [] #Objective values: Valores objetivos de cada individuo de la población
     i = 0
     while i < len(populations):
-        #print("i: ",i, end = '')
         ov_population.append(objectiveFunction(populations[i]))
-        '''
-        if attach:
-            aux = [populations[i],objectiveFunction(populations[i])]
-            population_with_ov.append(aux)'''
         i += 1
     return ov_population
 
@@ -90,32 +85,31 @@ def evaluate_population(attach):
 
 #Selección por Torneo
 def selection_tournament(maxParents,maxIndividuals):
-    #print("population: ", population)
     parents = []
-    length_tournament = round(0.4*maxIndividuals)
-    it_parent = 0
+    length_tournament = round(0.2*maxIndividuals)
+    #copy_population = population.copy()
 
-#
+    it_parent = 0
     while it_parent < maxParents:
-        copy_population = population
         random_population = []
         for i  in range(0,length_tournament):
-            index = random.randint(0,len(copy_population)-1)
-            if copy_population[index] not in random_population:
-                random_population.append(copy_population[index])
-
-
+            index = random.randint(0,len(population)-1)
+            random_population.append(population[index])
+            #if population[index] not in random_population:
+            #    random_population.append(population[index])
+        #print("random_p: ", random_population)
         #random_population = random.sample(copy_population,length_tournament)
 
         #Escoge el mejor de los guardados en random_population
         ov_population = evaluate(random_population,False)
         minIndividual_index = ov_population.index(min(ov_population))
         possible_parent = random_population[minIndividual_index]
-        #print("random_p: ", random_population)
+
         #print("ov_population: ",ov_population)
-        #print("pp ", possible_parent)
+        #print("possible_parent ", possible_parent)
         parents.append(possible_parent)
         it_parent += 1
+
     #print("while maxParents terminada")
     print("Parents: ",parents)
     print()
@@ -222,73 +216,59 @@ def graficar(mejorObjetivo):
 #--------------MAIN------------
 #Copiar y pegar en una función AG()
 
-
-
 #PRUEBAS------------------------
 
-fileNameFlow = input("Ingrese el nombre del archivo de flujo: ")
-fileNameDistance = input("Ingrese el nombre del archivo de distancias: ")
+fileNameFlow = "Fchr12a.dat"     #input("Ingrese el nombre del archivo de flujo: ")
+fileNameDistance = "Dchr12a.dat" #input("Ingrese el nombre del archivo de distancias: ")
 flow = readFile(fileNameFlow)
 distance = readFile(fileNameDistance)
-maxIndividuals = int(input("Ingrese la cantidad maxima de individuos en una poblacion: "))
-maxGenerations = int(input("Ingrese la cantidad maxima de generaciones: "))
-mutationProbability = float(input("Ingrese una probabilidad de mutacion: "))
+maxIndividuals = 10            #int(input("Ingrese la cantidad maxima de individuos en una poblacion: "))
+maxGenerations = 4             #int(input("Ingrese la cantidad maxima de generaciones: "))
+mutationProbability = 0.2       #float(input("Ingrese una probabilidad de mutacion: "))
 initialPopulation(maxIndividuals, len(distance[0]))
-
-#parents = selection_tournament(int(maxIndividuals/2),maxIndividuals)
-#print("population_with_ov: ",population_with_ov)
-#parents=[[1,2,3,4,5,6,7,8,9],[9,3,7,8,2,6,5,1,4]]
-#print("\nparents2: ",parents)
-#crossover(parents)
-#hola = mutation(parents,0.2)
-
+print("initialPopulation= ", population)
 #AG()
-
 generation = 0
 while generation < maxGenerations:
-    print("----------------------------------")
+    print("------------------------------------------------------")
     print("--------------GENERATION ",generation,"---------------")
-    print("----------------------------------")
-    #a. Evaluar
-    #print("population",population)
+    print("------------------------------------------------------")
     print("Evaluacion: ")
     ov_population = evaluate_population(True)
-    #print("ov_population: ",ov_population)
-    #print("population: ",population)
-    #print("population with ov: ",population_with_ov)
-    #print("ov_population",ov_population)
+    print("ov_population= ", ov_population)
+
     of_result.append(min(ov_population))
+    print("of_result= ", of_result)
     solution_result.append(population[ov_population.index(min(ov_population))])
-    #print ("of_result",of_result)
-    #print ("solution_result", solution_result)
-    #print()
+    print("solution_result= ", solution_result)
 #--------------------------------------
     #b. Seleccion de los padres
     print("Seleccion: ")
-    #print("pop: ", population)
     parents = selection_tournament(int(maxIndividuals/2),maxIndividuals)
+    print("parents= ", parents)
 #--------------------------------------
     #c. Reproduccion
     #    - Recombinacion
     print("Recombinacion: ")
     offsprings = crossover(parents)
+    print("offsprings= ", offsprings)
 #--------------------------------------
     #    - Mutacion
     print("Mutacion: ")
     offsprings_mutated = mutation(offsprings,mutationProbability)
-    print("HIJOS NUEVOS: ",offsprings_mutated)
+    print("HIJOS NUEVOS: ")
+    print("offsprings_mutated= ",offsprings_mutated)
 #--------------------------------------
     #d. Reemplazo
     print("Reemplazo: ")
     new_population = replaceOffsprings(offsprings_mutated,maxIndividuals)
-    #print()
-    #print()
-    #print("new_population: ",new_population)
+    print("new_population= ",new_population)
+
     new_solutions = deattach(new_population)
-#    print("new_solutions: ", new_solutions)
+    print("new_solutions: ", new_solutions)
     population = new_solutions.copy()
     #print("population nueva: ", population)
-    print("POBLACION FINAL DEL GENERATE: ", population)
+    print("POBLACION NUEVA: ", population)
 #--------------------------------------
     generation += 1
     print()

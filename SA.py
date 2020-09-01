@@ -3,14 +3,16 @@ import matplotlib.pyplot as plt
 import random
 import math
 from random import randint
+from numpy import *
 import time
+
 
 distance = []
 flow = []
 bestObjective= []
 temperature= []
-instances_best_objetive= []
-instances_best_objetive_current= []
+inst_best_objetive= []
+inst_best_objetive_current= []
 time_instances= []
 p= []
 o= []
@@ -72,6 +74,8 @@ def objectiveFunction(solution):
 #           funtionT = función de enfriamiento
 # salida: matriz con los datos
 def SA(Tmax, Tmin, iteration, funtionT):
+    global o
+    o=[]
     s0= initialSolution(len(distance))  #Solución inicial
     sCurrent= s0.copy()                 #Solución actual
     t=Tmax                              #Temperatura Máxima
@@ -79,6 +83,7 @@ def SA(Tmax, Tmin, iteration, funtionT):
     mejorSolucion = sCurrent.copy()
     o.append(mejorObjetivo)
     ofActual=objectiveFunction(sCurrent)
+
     while t > Tmin:
         it=0
         while it < iteration:
@@ -106,10 +111,13 @@ def SA(Tmax, Tmin, iteration, funtionT):
         else:
             t = t * alpha
     #graficar(bestObjective, p, o, mejorObjetivo, temperature)
-    instances_best_objetive_current.append(o)
+    inst_best_objetive_current.append(o)
+
     return mejorObjetivo
 
-#graficar
+
+# Grafica_ grafico con los mejores obetivos, la probabilidad de aceptación,
+# el mejor objetivo encontrado por cada temperatura, y la funcion de temperatura
 def graficar(bestObjective, p, o, mejorObjetivo, temperature):
     graficoMejores = plt.plot(bestObjective)
     plt.setp(graficoMejores,"linestyle","none","marker","s","color","b","markersize","1")
@@ -125,7 +133,7 @@ def graficar(bestObjective, p, o, mejorObjetivo, temperature):
     plt.show()
 
     grafico = plt.plot(p)
-    plt.setp(grafico,"linestyle","none","marker","s","color","g","markersize","1")
+    plt.setp(grafico,"linestyle","none","marker","s","color","indigo","markersize","1")
     plt.ylabel(u"Probabilidad")
     plt.xlabel(u"Valor Óptimo : " + str(mejorObjetivo))
     plt.show()
@@ -136,7 +144,8 @@ def graficar(bestObjective, p, o, mejorObjetivo, temperature):
     plt.xlabel(u"Valor Óptimo : " + str(mejorObjetivo))
     plt.show()
 
-#-------------
+#------------------
+# Grafico de las 20 instancias al ejecutar una misma configuración
 def graficar_inst_20(instancesO,instancesC):
     #x=range(20)
     graficoMejores = plt.plot(instancesO)
@@ -146,12 +155,42 @@ def graficar_inst_20(instancesO,instancesC):
     plt.xlabel(u"Instancia")
     plt.show()
 
-    graficoMejores = plt.plot(instancesC)
-    plt.setp(graficoMejores,"linestyle","none","marker","s","color","b","markersize","1")
+    colors =  ['black','red','gray','orange','gold','yellow','green','aqua','blue','indigo','pink']
+
+    print(len(instancesC))
+    cont=0
+    for i in instancesC:
+        graficoMejores = plt.plot(i)
+        plt.setp(graficoMejores,"linestyle","none","marker","s","color",colors[cont],"markersize","1")
+        cont+=1
     plt.title(u"Simulated annealing QAP")
-    plt.ylabel(u"Valor objetivo actual")
-    plt.xlabel(u"Instancia")
+    plt.ylabel(u"Valor objetivo")
+    plt.xlabel(u"Iteraciones")
     plt.show()
+
+#------------------
+# Gráfico de cajas y bigotes
+# Comparativa de metaheuristicas con configuraciones iguales
+def grafico_cajas(ov_meta1, ov_meta2):
+    # Cambio los colores para que se vea bien en VSC con tema oscura
+    #print(ov_meta1)
+    #g= array([ov_meta1, ov_meta2])
+    #g.flatten()
+    #print(g)
+    #plt.boxplot(g,#[jap, ale, arg]
+    #            notch=True, patch_artist=True,
+    #            capprops=dict(color="green"),
+    #            medianprops=dict(color="orange"))
+    #plt.xticks([1, 2], ['Meta1', 'Meta2'])
+    #plt.ylabel('Instancias')
+    data=[]
+    d2 = concatenate((ov_meta1, ov_meta2))
+    data = [data, d2, d2[::2]]
+    fig7, ax7 = plt.subplots()
+    ax7.set_title('Multiple Samples with Different sizes')
+    ax7.boxplot(data)
+    plt.show()
+
 
 # ---------------------------------
 def main():
@@ -168,22 +207,25 @@ def main():
     flow= readFile(nameF)
     #--------Instancias-----------------
     i=0
-    while i < 20:
+    while i < 3:
         start_time = time.time()
-        instances_best_objetive.append(SA(Tmax, Tmin, iteration, 2))
+        inst_best_objetive.append(SA(Tmax, Tmin, iteration, 2))
         time_instances.append((time.time() - start_time))
         print("--- %s seconds ---" % (time.time() - start_time))
         i+=1
     #------------------------------------
-    #print(time_instances)
-    graficar_inst_20(instances_best_objetive, instances_best_objetive_current)
+    #graficar_inst_20(inst_best_objetive, inst_best_objetive_current)
+    grafico_cajas(inst_best_objetive, inst_best_objetive)
 
 main()
 
 #graficar(bestObjective, p, o, mejorObjetivo, temperature)
 
-#Prueba 1
+#CONFIGURACIONES
+# CONFIG 1
 # Dchr12a.dat   Fchr12a.dat
 # beta= 0.2  alpha= 0.1  tMax= 50 tMin= 4 iter= 20 solucion= 46028
 # beta= 0.1  alpha= 0.2  tMax= 100 tMin= 4 iter= 50 solucion= 49854
+
+# CONFIG 2
 # Dchr18a.dat Fchr18a.dat
