@@ -27,7 +27,8 @@ o_dual= []
 #-------------------------------------------
 
 
-GA=[[10, 5, 9, 6, 7, 11, 8, 4, 12, 3, 2, 1], array([11,  6,  1,  3,  5, 12,  7,  8,  2, 10,  9,  4]), array([ 7,  5,  1,  3,  2, 10,  8,  6,  4, 11,  9, 12]), array([ 7,  5,  1,  3,  2, 10,  8, 11,  9,  6, 12,  4]), array([ 7,  5,  1, 10,  2,  3, 12, 11,  9,  6,  8,  4]), array([ 7,  1,  5,  8,  2, 10,  3, 11,  9,  6, 12,  4]), array([ 7,  5,  1,  2, 10,  3,  8, 11,  9,  6, 12,  4]), array([ 7,  5,  1,  2, 10,  3,  8, 11,  9,  6, 12,  4]), array([ 7,  5,  1,  2, 10,  3,  8, 11,  9,  6, 12,  4]), array([ 7,  5,  1,  2, 10,  3,  8, 11,  9,  6, 12,  4]), array([ 7,  5, 10,  2,  1,  3,  8, 11,  9,  6, 12,  4]), array([ 7,  5, 10,  2,  1,  3,  8, 11,  9,  6, 12,  4]), array([ 7,  5,  9,  2,  1,  3, 12, 11, 10,  6,  8,  4]), array([ 7,  5, 10,  2,  1,  3,  8, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11,  9,  6, 12,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11,  9,  6, 12,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4]), array([ 7,  5,  8,  2,  1,  3, 10, 11, 12,  6,  9,  4])]
+GA=[11370, 11688, 9552, 11326, 15496, 12142, 12300, 14108, 10202, 11326, 13184, 13372, 10096, 12250, 12222, 10612, 11924, 10192, 11518, 11668]
+SA=[16346, 17324, 15390, 15540, 17068, 11538, 13838, 17354, 16742, 15144, 16068, 18214, 15184, 16392, 16262, 16668, 15920, 16764, 17400, 15694]
 
 # readFile: función que lee el archivo con los datos
 # entrada: nombre del archivo
@@ -155,14 +156,17 @@ def graficar(bestObjective, p, o, mejorObjetivo, temperature):
     plt.show()'''
 # Grafico de las 20 instancias al ejecutar una misma configuración
 def graficar_inst_20(instancesO,instancesC):
+    mejorObjetivo=min(instancesO)
     graficoMejores = plt.plot(instancesO)
     plt.setp(graficoMejores,"linestyle","none","marker","s","color","b","markersize","1")
     plt.title(u"Simulated annealing QAP")
     plt.ylabel(u"Valor objetivo")
-    plt.xlabel(u"Instancia")
+    plt.xlabel(u"Valor Óptimo : " + str(mejorObjetivo))
     plt.show()
 
-    colors =  ['black','red','gray','orange','gold','yellow','green','aqua','blue','indigo','pink','magenta','cyan','purple', 'teal', 'lime','turquoise','coral','navy','brown'] #,'magenta','cyan','purple', 'teal', 'lime','turquoise','coral','navy','brown'
+    colors =  ['black','red','gray','orange','gold','yellow','green','aqua','blue','indigo','pink','magenta','cyan','purple', 'teal', 'lime','turquoise','coral','navy','brown']
+    y=['Instancia 1', 'Instancia 2','Instancia 3', 'Instancia 4','Instancia 5', 'Instancia 6','Instancia 7', 'Instancia 8','Instancia 9', 'Instancia 10',
+    'Instancia 11', 'Instancia 12','Instancia 13', 'Instancia 14','Instancia 15', 'Instancia 16','Instancia 17', 'Instancia 18','Instancia 19','Instancia 20']
 
     cont=0
     for i in instancesC:
@@ -170,6 +174,7 @@ def graficar_inst_20(instancesO,instancesC):
         plt.setp(graficoMejores,"linestyle","none","marker","s","color",colors[cont],"markersize","1")
         cont+=1
     plt.title(u"Simulated annealing QAP")
+    plt.legend(y)
     plt.ylabel(u"Valor objetivo")
     plt.xlabel(u"Iteraciones")
     plt.show()
@@ -177,11 +182,11 @@ def graficar_inst_20(instancesO,instancesC):
 #----------------- Gráfico de cajas y bigotes---------------------
 # Comparativa de metaheuristicas con configuraciones iguales
 def grafico_cajas(ov_meta1, ov_meta2):
-    d1=list(set(ov_meta1))
-    d2=list(set(ov_meta2))
-    print("d1 ov_meta1", d1)
-    print("d2 ov_meta2", d2)
-    data=[d1,d2]
+    #d1=list(set(ov_meta1))
+    #d2=list(set(ov_meta2))
+    print("d1 ov_meta1", ov_meta1)
+    print("d2 ov_meta2", ov_meta2)
+    data=[ov_meta1,ov_meta2]
     fig,ax = plt.subplots()
     ax.set_title('Comparativa entre dos metaheuristicas distintas')
     ax.boxplot(data)
@@ -196,13 +201,13 @@ def main():
 
     #------------------ CONFIGURACION-------------------------
 
-    alpha= .99          #float(input('Ingrese valor de alpha: '))
-    Tmax= 100000      #float(input('Ingrese temperatura máxima: '))
+    alpha= .99         #float(input('Ingrese valor de alpha: '))
+    Tmax= 10000         #float(input('Ingrese temperatura máxima: '))
     Tmin= 1             #float(input('Ingrese temperatura mínima: '))
-    iteration= 20       #int(input('Ingrese el numero de iteraciones: '))
+    iteration= 100       #int(input('Ingrese el numero de iteraciones: '))
 
-    nameD= "Dchr12a.dat"#input('Nombre del archivo de distancias: ')
-    nameF= "Fchr12a.dat"#input('Nombre del archivo de flujos: ')
+    nameD= "Dchr25a.dat"#input('Nombre del archivo de distancias: ')
+    nameF= "Fchr25a.dat"#input('Nombre del archivo de flujos: ')
     distance= readFile(nameD)
     flow= readFile(nameF)
 
@@ -215,13 +220,16 @@ def main():
         print("--- %s seconds ---" % (time.time() - start_time))
         i+=1
     #------------------------------------
+    #print(inst_best_objetive)
     graficar_inst_20(inst_best_objetive, inst_best_objetive_current)
 
     #------------------COMPARATION-------------------------
     #ov_GA=[]
     #for elem in GA:
     #    ov_GA.append(objectiveFunction(elem))
-    #grafico_cajas(inst_best_objetive_t[0], ov_GA)
+    #GA=[11370, 11688, 9552, 11326, 15496, 12142, 12300, 14108, 10202, 11326, 13184, 13372, 10096, 12250, 12222, 10612, 11924, 10192, 11518, 11668]
+    #SA=[16346, 17324, 15390, 15540, 17068, 11538, 13838, 17354, 16742, 15144, 16068, 18214, 15184, 16392, 16262, 16668, 15920, 16764, 17400, 15694]
+    #grafico_cajas(SA,GA)
 
 
 main()

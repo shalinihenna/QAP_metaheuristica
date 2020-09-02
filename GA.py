@@ -144,13 +144,13 @@ def one_point_crossover(parent1, parent2):
     #x = int((len(parent1))/2)
     x = int(len(parent1)/2)
     offspring1_new = np.append(parent1[:x], [0]*x)
-    i = 6
+    i = x
     while 0 in offspring1_new:
         for element in parent2:
             if element not in offspring1_new:
                 offspring1_new[i] = element
                 i+=1
-    j = 6
+    j = x
     offspring2_new = np.append(parent2[:x], [0]*x)
     while 0 in offspring2_new:
         for element in parent1:
@@ -216,14 +216,17 @@ def run(size_population, generations, size_solution,mutationProbability):
 # Grafico de las 20 instancias al ejecutar una misma configuración
 def graficar_inst_20(instancesO,instancesC):
     #x=range(20)
+    mejorObjetivo=min(instancesO)
     graficoMejores = plt.plot(instancesO)
     plt.setp(graficoMejores,"linestyle","none","marker","s","color","b","markersize","1")
     plt.title(u"Simulated annealing QAP")
     plt.ylabel(u"Valor objetivo")
-    plt.xlabel(u"Instancia")
+    plt.xlabel(u"Valor Óptimo : " + str(mejorObjetivo))
     plt.show()
 
-    colors =  ['black','red','gray','orange','gold','yellow','green','aqua','blue','indigo','pink']
+    colors =  ['black','red','gray','orange','gold','yellow','green','aqua','blue','indigo','pink','magenta','cyan','purple', 'teal', 'lime','turquoise','coral','navy','brown']
+    y=['Instancia 1', 'Instancia 2','Instancia 3', 'Instancia 4','Instancia 5', 'Instancia 6','Instancia 7', 'Instancia 8','Instancia 9', 'Instancia 10',
+    'Instancia 11', 'Instancia 12','Instancia 13', 'Instancia 14','Instancia 15', 'Instancia 16','Instancia 17', 'Instancia 18','Instancia 19','Instancia 20']
 
     print(len(instancesC))
     cont=0
@@ -233,6 +236,7 @@ def graficar_inst_20(instancesO,instancesC):
         cont+=1
     plt.title(u"Algoritmo Genetico QAP")
     plt.ylabel(u"Valor objetivo")
+    plt.legend(y)
     plt.xlabel(u"Iteraciones")
     plt.show()
 
@@ -243,6 +247,7 @@ inst_best_objetive= []
 inst_best_objetive_current= []
 generations = 50
 size_population = 1000
+
 size_solution = 12
 mutationProbability = 0.5
 distance = []
@@ -256,7 +261,7 @@ flow= readFile("Fchr12a.dat")
 #population = run(size_population, generations, size_solution,mutationProbability)
 #--------Instancias-----------------
 i=0
-while i < 11:
+while i < 20:
     start_time = time.time()
     ints= run(size_population, generations, size_solution,mutationProbability)
     inst_best_objetive_current.append(ints)
@@ -265,4 +270,5 @@ while i < 11:
     print("--- %s seconds ---" % (time.time() - start_time))
     i+=1
 #------------------------------------
+print(inst_best_objetive)
 graficar_inst_20(inst_best_objetive, inst_best_objetive_current)

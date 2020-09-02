@@ -1,20 +1,20 @@
 #CONFIGURACIONES
 #---------------------     SA    ------------------------------
-#--------------------- ARCHIVO 1, jkl2---------------------------
+#--------------------- ARCHIVO 1,2---------------------------
 # Dchr12a.dat   Fchr12a.dat
-# Dchr32a.dat Fchr32a.dat
+# Dchr25a.dat   Fchr25a.dat
 
 # CONFIG 1
-# alpha= 0.2   tMax= 100000  tMin= 4  iter= 20
-# alpha= .99   tMax= 100000  tMin= 4  iter= 20
+# alpha= 0.2   tMax= 100000  tMin= 1  iter= 20
+# alpha= .99   tMax= 100000  tMin= 1  iter= 20
 
 # CONFIG 2
-# alpha= 0.7   tMax= 1000   tMin= 4  iter= 20
-# alpha= 0.7   tMax= 100000 tMin= 4  iter= 20
+# alpha= 0.99   tMax= 1000   tMin= 1  iter= 20
+# alpha= 0.99   tMax= 100000 tMin= 1  iter= 20
 
 # CONFIG 3
-# alpha= 0.7   tMax= 100000  tMin= 4  iter= 20
-# alpha= 0.7   tMax= 100000  tMin= 4  iter= 100
+# alpha= 0.99   tMax= 100000  tMin= 1  iter= 20
+# alpha= 0.99   tMax= 100000  tMin= 1  iter= 100
 
 
 #---------------------   GA   ------------------------------
@@ -27,16 +27,16 @@
 # generaciones= 50   mutacion= 0,5   poblacion= 1000
 
 # CONFIG 2
-# generaciones= 30   mutacion= 0,2   poblacion= 4
-# generaciones= 30   mutacion= 0,7   poblacion= 4
+# generaciones= 20   mutacion= 0,2   poblacion= 1000
+# generaciones= 20   mutacion= 0,5   poblacion= 1000
 
 # CONFIG 2
-# generaciones= 30   mutacion= 0,5   poblacion= 1000
-# generaciones= 30   mutacion= 0,5   poblacion= 10000
+# generaciones= 20   mutacion= 0,5   poblacion= 1000
+# generaciones= 20   mutacion= 0,5   poblacion= 5000
 
 
 
 #---------------------   SA  vs GA  ------------------------------
-#---------------------   ARCHIVO 1  ------------------------------
-# alpha= .99          tMax= 10000     tMin= 4           iter= 20
-# generaciones= 200   mutacion= 0,5   poblacion= 1000
+#---------------------   ARCHIVO 12  ------------------------------
+#SA alpha= .99          tMax= 1000     tMin= 1           iter= 20
+#GA generaciones= 50   mutacion= 0,5   poblacion= 1000
